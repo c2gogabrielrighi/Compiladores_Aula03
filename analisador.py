@@ -10,22 +10,26 @@
 # RegEx para constantes numéricas real: \d{1,2}\.\d{1,2}
 # RegEx para identificador de comentário de linha: \/{2}.{0,}
 
+# Declara os arrays de retorno
 arrSaida = []
 arrErros = []
 arrSimbolos = []
 
+# Método para adicionar tipo de dado para cada linha sem erro
 def addSaida(descricao,numeroLinha):
     arrSaida.append('[' + str(numeroLinha) + '] ' + descricao)
 
+# Método para adicionar a lista de linhas com erro
 def addErros(numeroLinha):
     arrErros.append(str(numeroLinha))
 
+# Método para listagem de símbolos
 def addSimbolos(string):
     if string not in arrSimbolos:
         arrSimbolos.append(string)
     return (arrSimbolos.index(string))+1
 
-
+# Método que valida se a linha é um comentário ou não
 def ehComentario(string,numeroLinha):
     if(len(string) >= 2):
         if string[0] == '/' and string[1] == '/':
@@ -36,6 +40,7 @@ def ehComentario(string,numeroLinha):
     else:
         return False
 
+# Método que valida se a palavra é reservada
 def ehReservada(string,numeroLinha):
     palavrasReservadas = 'int double float real break case char const continue'
     for palavraReservada in palavrasReservadas.split(' '):
@@ -43,6 +48,7 @@ def ehReservada(string,numeroLinha):
             addSaida(palavraReservada.upper(),numeroLinha)
             return True
 
+# Método que valida se a string é um número inteiro
 def ehInteiro(string,numeroLinha):
     listaNumeros = '0 1 2 3 4 5 6 7 8 9'
     if(len(string) > 2):
@@ -56,6 +62,7 @@ def ehInteiro(string,numeroLinha):
         addSaida('IDENTIFICADOR ' + str(identificador),numeroLinha)
         return True
 
+# Método que valida se a string é um número real
 def ehReal(string,numeroLinha):
     listaNumeros = '0 1 2 3 4 5 6 7 8 9'
     numeroSplit = string.split('.')
@@ -76,6 +83,7 @@ def ehReal(string,numeroLinha):
             addSaida('IDENTIFICADOR ' + str(identificador),numeroLinha)
             return True
 
+# Método que valida se a string é um identificador (inicia por letra e não possui caracteres especiais)
 def ehIdentificador(string,numeroLinha):
     listaLetras = 'a b c d e f g h i j k l m n o p q r s t u v w x y z'
     listaNumeros = '0 1 2 3 4 5 6 7 8 9'
@@ -89,13 +97,15 @@ def ehIdentificador(string,numeroLinha):
         addSaida('IDENTIFICADOR ' + str(identificador),numeroLinha)
         return True
 
-fileInput = open('entrada.txt')
-numeroLinha = 1
+
+fileInput = open('entrada.txt') # Abre o arquivo com as linhas
+numeroLinha = 1 # Inicializa
+# Lê cada linha no arquivo de entrada
 for fileLine in fileInput.readlines():
-    fileLineSplit = fileLine.split(' ',1)
+    fileLineSplit = fileLine.split(' ',1) # Separa as linhas por espaços resultando em um dicionário
     if ehComentario(''.join(fileLineSplit[0].split()),numeroLinha):
         exit
-    elif len(fileLineSplit) > 1:
+    elif len(fileLineSplit) > 1: # Verifica se existe mais de um item no dicionário gerado. Se existir, gera erro.
         addErros(numeroLinha)
     else:
         if ehReservada(''.join(fileLineSplit[0].split()),numeroLinha):
