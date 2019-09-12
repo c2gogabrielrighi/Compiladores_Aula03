@@ -44,7 +44,7 @@ def ehReservada(string,numeroLinha):
             return True
 
 def ehInteiro(string,numeroLinha):
-    listaNumeros = '1 2 3 4 5 6 7 8 9'
+    listaNumeros = '0 1 2 3 4 5 6 7 8 9'
     if(len(string) > 2):
         return False
     else:
@@ -57,7 +57,7 @@ def ehInteiro(string,numeroLinha):
         return True
 
 def ehReal(string,numeroLinha):
-    listaNumeros = '1 2 3 4 5 6 7 8 9'
+    listaNumeros = '0 1 2 3 4 5 6 7 8 9'
     numeroSplit = string.split('.')
     if(len(numeroSplit) == 2):
         if (len(numeroSplit[0]) >= 1 and len(numeroSplit[0]) <= 2) and (len(numeroSplit[1]) >= 1 and len(numeroSplit[1]) <= 2):
@@ -78,9 +78,13 @@ def ehReal(string,numeroLinha):
 
 def ehIdentificador(string,numeroLinha):
     listaLetras = 'a b c d e f g h i j k l m n o p q r s t u v w x y z'
+    listaNumeros = '0 1 2 3 4 5 6 7 8 9'
     if string[0] not in listaLetras:
         return False
     else:
+        for caractere in string:
+            if caractere not in listaLetras and caractere not in listaNumeros:
+                return False
         identificador = addSimbolos(string)
         addSaida('IDENTIFICADOR ' + str(identificador),numeroLinha)
         return True
