@@ -47,6 +47,7 @@ def ehReservada(string,numeroLinha):
         if string == palavraReservada:
             addSaida(palavraReservada.upper(),numeroLinha)
             return True
+    return False
 
 # Método que valida se a string é um número inteiro
 def ehInteiro(string,numeroLinha):
@@ -67,7 +68,8 @@ def ehReal(string,numeroLinha):
     listaNumeros = '0 1 2 3 4 5 6 7 8 9'
     numeroSplit = string.split('.')
     if(len(numeroSplit) == 2):
-        if (len(numeroSplit[0]) >= 1 and len(numeroSplit[0]) <= 2) and (len(numeroSplit[1]) >= 1 and len(numeroSplit[1]) <= 2):
+        # if (len(numeroSplit[0]) >= 1 and len(numeroSplit[0]) <= 2) and (len(numeroSplit[1]) >= 1 and len(numeroSplit[1]) <= 2):
+        if (len(numeroSplit[0]) == 2) and (len(numeroSplit[1]) == 2):
             numeroInteiro = numeroSplit[0]
             numeroReal = numeroSplit[1]
 
